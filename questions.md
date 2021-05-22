@@ -12,19 +12,19 @@ So, it helps us not to render, when props between renders didn't change.
 2. Context + ShouldComponentUpdate might be dangerous. Can think of
    why is that?
 
- As far as I remember, shouldComponentUpdate can't cancel rerenders, when
+ As far as I remember, `shouldComponentUpdate` can't cancel rerenders, when
  context provider value changes.
 
 3. Describe 3 ways to pass information from a component to its PARENT.
 
-a) Parent creates a callback function and passes it to its child as a prop. At some point
+  * Parent creates a callback function and passes it to its child as a prop. At some point
 child calls it, passing the information to it, so the parent gets notified and
 gets the data
-b) Same as before, but parent passes the callback with the help of react context
-c) With pubsub pattern of some external library, for example.
+  * Same as before, but parent passes the callback with the help of react context
+  * With pubsub pattern of some external library, for example.
 The parent subscribes to changes in componentDidMount or in useEffect hook and child
 sends data to that library. Parent gets notified, as a subscriber.
-d) Pretty simmilar to the first one. Passing function to child like that:
+  * Pretty simmilar to the first one. Passing function to child like that:
 
 ```javascript
 <Child>{(dataFromChild) => <div>{dataFromChild}</div>}</Child>
@@ -32,24 +32,24 @@ d) Pretty simmilar to the first one. Passing function to child like that:
 
 4. Give 2 ways to prevent components from re-rendering.
 
- For class components - override shouldComponentUpdate / extend PureComponent
- For functional component - React.memo
+ For class components - override `shouldComponentUpdate` / extend PureComponent.
+ For functional component - `React.memo`
 
 5. What is a fragment and why do we need it? Give an example where it
    might break my app.
 
-Almost same as Fragment for DOM. It wraps react elements/components and renders
+Almost same as Fragment for DOM. It wraps react elements/components and renders as
 if it didn't exist. It gives the ability to avoid situation, when you don't want
 to return single entity, but want to return several. (Fragment is used in the challenge
-exercise to return multiple `<li>` elements without creating a wrapping component for them).
+exercise to return multiple `<li>` elements without creating a wrapping `<ul>` component for them).
 It can break an app, when you accidently return several elements with fragment,
 but just one element is expected. It may break styling.
 
 6. Give 3 examples of the HOC pattern.
 
-a) Redux's `connect` HOC
-b) React router `withRouter` HOC
-c) Handwritten:
+* Redux's `connect` HOC
+* React router `withRouter` HOC
+* Handwritten:
 
 ```javascript
 function withLoggingPropsOnMount(WrappedComponent) {
@@ -119,18 +119,18 @@ internal optimisations inside react itself.
 
 9. List the steps needed to migrate a Class to Function Component.
 
-a) Return value from render method of class component becomes return value of the
+* Return value from render method of class component becomes return value of the
 functional component
-b) State from class components is splitted between useState hooks
-c) NON-lifecycle methods are put as functions or wrapped in useCallback hook and
+* State from class components should be splitted between useState hooks
+* NON-lifecycle methods are put as functions or wrapped in useCallback hook and
 put inside functional component
-d) class component properties are put into useRef hook
-e) createRef turns into useRef either
-f) componentDidMount, componentDidUpdate, componentWillUnmount are replaced
+* class component properties are put into useRef hook
+* `createRef` turns into `useRef` either
+* `componentDidMount`, `componentDidUpdate`, `componentWillUnmount` are replaced
 with useEffect/useLayoutEffect
-g) shouldComponentUpdate can be implemented with React.memo
-h) some logic can be moved to custom hooks
-i) error boundary logic should be moved to the parent or removed, as currently
+* `shouldComponentUpdate` can be implemented with `React.memo`
+* some logic can be moved to custom hooks
+* error boundary logic should be moved to the parent or removed, as currently
 functional components can't have this logic
 
 10. List a few ways styles can be used with components.
@@ -138,8 +138,8 @@ functional components can't have this logic
 We can directly set styles for elements:
 `<div style={{ backgroundColor: 'grey' }}>Hello world</div>`
 
-We can set classes `<div className="wrapper">...</div>`
-We also can combine both approaches
+We can set classes `<div className="wrapper">...</div>`.
+We also can combine both approaches.
 Also, different helper libraries for working with CSS-in-JS can be used,
 for example `styled-components`
 
