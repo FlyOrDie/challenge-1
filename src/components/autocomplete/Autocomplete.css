@@ -1,0 +1,62 @@
+.autocomplete {
+  position: relative;
+
+  --border-color: grey;
+  --list-background: white;
+  --item-background: white;
+  --item-background-hover: #eee;
+  --item-background-active: #ccc;
+}
+
+.autocomplete__label-text {
+  font-weight: bold;
+  margin-left: 5px;
+  line-height: 2rem;
+}
+/* As a reusable component, width should be set on component user's side */
+.autocomplete__input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  outline: 0;
+  font-size: 1rem;
+}
+
+.autocomplete__list {
+  width: 100%;
+  max-height: 500px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  z-index: 9000;
+  transform: translateY(10px);
+  overflow: auto;
+  list-style-type: none;
+  background-color: var(--list-background);
+}
+
+.autocomplete__list-item {
+  padding: 10px;
+  margin: 0;
+  transition: all ease-in 0.2s;
+  background-color: var(--item-background);
+  cursor: pointer;
+}
+
+.autocomplete__list-item:hover {
+  background-color: var(--item-background-hover);
+}
+.autocomplete__list-item:active {
+  background-color: var(--item-background-active);
+}
+
+.autocomplete__list-item.autocomplete__list-item_loading:hover,
+.autocomplete__list-item.autocomplete__list-item_not-found:hover {
+  cursor: default;
+  background-color: var(--item-background);
+}

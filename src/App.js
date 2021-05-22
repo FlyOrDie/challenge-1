@@ -1,25 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback } from "react";
 
-function App() {
+import { AutocompleteClass, AutocompleteFunc } from "./components/autocomplete";
+
+import "./App.css";
+
+const REQUEST_URL = "http://localhost:3123/countries?query=";
+
+const requestData = async (query) => {
+  const response = await fetch(`${REQUEST_URL}${query}`);
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  return [];
+};
+
+const App = () => {
+  const renderItem = useCallback((pieces) => {
+    // Can have map index keys
+    const renderedPieces = pieces.map(({ text, isHighlighted }, index) => {
+      if (!isHighlighted) return text;
+
+      const className =
+        "autocomplete__text-section autocomplete__text-section_highlighted";
+
+      return (
+        <mark key={index} className={className}>
+          {text}
+        </mark>
+      );
+    });
+
+    return renderedPieces;
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Deel code challenge</h1>
+
+      <section>
+        <h2>Autocomplete class component example</h2>
+        <AutocompleteClass
+          onChoose={console.log}
+          requestData={requestData}
+          renderItem={renderItem}
+        />
+      </section>
+
+      <section>
+        <h2>Autocomplete functional component example</h2>
+        <AutocompleteFunc
+          onChoose={console.log}
+          requestData={requestData}
+          renderItem={renderItem}
+        />
+      </section>
     </div>
   );
-}
+};
 
 export default App;
